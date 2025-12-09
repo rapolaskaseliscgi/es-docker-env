@@ -1,0 +1,20 @@
+cluster.name: "es-upgrade-lab"
+node.name: "{{NODE_NAME}}"
+path.logs: /var/log/elasticsearch
+path.data: /var/lib/elasticsearch
+discovery.seed_hosts: ["es01", "es02"]
+cluster.initial_master_nodes: ["es01", "es02"]
+node.master: true
+node.data: true
+network.host: [_site_, _local_]
+node.max_local_storage_nodes: 1
+node.attr.fault_domain: 1
+node.attr.update_domain: 1
+cluster.routing.allocation.awareness.attributes: fault_domain,update_domain
+action.auto_create_index: .security*,.monitoring*,.kibana*,.watches,.triggered_watches,.watcher-history*,.logstash_dead_letter,.ml*
+xpack.monitoring.collection.enabled: true
+xpack.security.enabled: false
+script.allowed_types: inline
+script.allowed_contexts: template, ingest
+ingest.geoip.downloader.enabled: false
+bootstrap.memory_lock: true

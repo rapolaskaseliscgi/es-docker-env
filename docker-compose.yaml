@@ -1,0 +1,67 @@
+services:
+  es01:
+    image: ubuntu-systemd:latest
+    container_name: es01
+    privileged: true
+    environment:
+      - NODE_NAME=es01
+    volumes:
+      - es01_data:/var/lib/elasticsearch
+      - es01_conf:/etc/elasticsearch
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    ports:
+      - "9200:9200"   # expose ES01 on localhost
+    networks:
+      - esnet
+    tmpfs:
+      - /run
+      - /run/lock
+
+  es02:
+    image: ubuntu-systemd:latest
+    container_name: es02
+    privileged: true
+    environment:
+      - NODE_NAME=es02
+    volumes:
+      - es02_data:/var/lib/elasticsearch
+      - es02_conf:/etc/elasticsearch
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    ports:
+      - "9201:9200"   # expose ES02 on localhost
+    networks:
+      - esnet
+    tmpfs:
+      - /run
+      - /run/lock
+
+  es01-init:
+    image: alpine:3
+    depends_on:
+      - es01
+    volumes:
+      - ./init-watermark.sh:/init.sh:ro
+    entrypoint: ["/bin/sh", "-c"]
+    command: "/init.sh"
+    restart: "no"
+    networks:
+      - esnet
+# tools:
+  #   image: alpine:latest
+  #   container_name: tools
+  #   command: ["sh", "-c", "sleep infinity"]
+  #   networks:
+  #     - esnet
+  #   depends_on:
+  #     - es01
+  #     - es02
+
+volumes:
+  es01_data:
+  es01_conf:
+  es02_data:
+  es02_conf:
+
+networks:
+  esnet:
+    driver: bridge
