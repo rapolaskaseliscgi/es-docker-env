@@ -28,6 +28,7 @@ jq -s '{ settings: .[0], mappings: .[1] }' clean-settings.json clean-mapping.jso
 
 echo "Deleting local index if exists..."
 curl -s -XDELETE "$LOCAL_URL/$INDEX"
+echo;
 
 echo "Creating local index from cleaned mapping & settings..."
 curl -s -XPUT "$LOCAL_URL/$INDEX" \
