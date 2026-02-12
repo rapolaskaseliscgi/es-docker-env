@@ -19,6 +19,11 @@ This should give a running green cluster of two nodes
 Optional to copy some data:
 
 3. Setup ssh tunnel to demo environment to expose elasticsearch on port 10200
+
+```zsh
+ssh -L 10200:ccd-elastic-search-demo.service.core-compute-demo.internal:9200 bastion-nonprod.platform.hmcts.net
+```
+
 4. Copy some elasticsearch data from demo (bail_cases-000001 is index to copy):
 
 ```zsh

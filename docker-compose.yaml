@@ -1,6 +1,7 @@
 services:
   es01:
     image: ubuntu-systemd:latest
+    hostname: es01
     container_name: es01
     privileged: true
     environment:
@@ -19,6 +20,7 @@ services:
 
   es02:
     image: ubuntu-systemd:latest
+    hostname: es02
     container_name: es02
     privileged: true
     environment:
