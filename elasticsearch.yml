@@ -18,3 +18,5 @@ script.allowed_types: inline
 script.allowed_contexts: template, ingest
 ingest.geoip.downloader.enabled: false
 bootstrap.memory_lock: true
+
+path.repo: ["/usr/share/elasticsearch/backup"]

@@ -13,8 +13,8 @@ RUN wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17
 
 RUN mkdir -p /etc/elasticsearch/jvm.options.d && \
     printf "%s\n" \
-      "-Xms256m" \
-      "-Xmx256m" \
+      "-Xms512m" \
+      "-Xmx512m" \
       "-Des.cgroups.hierarchy.override=/" \
     > /etc/elasticsearch/jvm.options.d/docker-arm.options
 

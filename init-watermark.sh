@@ -13,7 +13,7 @@ until curl -s http://es01:9200/_cluster/health \
   | jq -e '.status=="yellow" or .status=="green"' >/dev/null 2>&1; do sleep 1; done
 
 echo "ES01 is up — applying watermarks..."
-curl -XPUT http://es01:9200/_cluster/settings \
+curl -w '\n' -Ss -XPUT http://es01:9200/_cluster/settings \
   -H "Content-Type: application/json" \
   -d '{
         "persistent": {
@@ -24,3 +24,19 @@ curl -XPUT http://es01:9200/_cluster/settings \
       }'
 
 echo "Watermarks applied successfully!"
+
+curl -w '\n' -Ss -XPUT "http://es01:9200/_snapshot/my_fs_repo" \
+  -H 'Content-Type: application/json' \
+  -d '{
+        "type": "fs",
+        "settings": {
+          "location": "/usr/share/elasticsearch/backup",
+          "compress": true
+        }
+      }'
+
+curl -w '\n' -Ss -X POST "http://es01:9200/_snapshot/my_fs_repo/snap_2026_03_10_9-indices/_restore" \
+  -H 'Content-Type: application/json' \
+  -d '{"include_global_state": true}'
+
+echo "Snapshot repository created and restore initiated!"

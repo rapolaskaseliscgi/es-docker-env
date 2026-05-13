@@ -8,7 +8,7 @@ import time
 REMOTE_URL="http://localhost:10200"
 LOCAL_URL="http://localhost:9200"
 
-BATCH_SIZE = 20
+BATCH_SIZE = 50
 SCROLL_TTL = "1m"
 MAX_RETRIES = 5
 BACKOFF_BASE_SECONDS = 5

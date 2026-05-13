@@ -7,3 +7,7 @@ docker volume rm \
   es-upgrade_es01_data \
   es-upgrade_es02_conf \
   es-upgrade_es02_data
+
+
+docker rm logstash postgres
+docker volume rm es-upgrade_pg_data
